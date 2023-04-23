@@ -1,19 +1,20 @@
 import React from 'react'
 
-const WeatherApi = () => {
- 
-  const API_KEY = "32a5bb7b9aa1126387e06acad817149e";
+const API_KEY = "32a5bb7b9aa1126387e06acad817149e";
   const API_URL_CURRENT = `https://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=metric`;
   const API_URL_3HOURS = `https://api.openweathermap.org/data/2.5/forecast?appid=${API_KEY}&units=metric`;
+
+const WeatherApi = () => {
+ 
 
   // It calls the API from openweathermap
   
   // Get the TODAY data
  
- const  getTodayData= (city)=> {
+  const getTodayData= async(city)=> {
       //Get the CURRENT data
       //console.log(API_URL_CURRENT + "&q=" + city);
-      return fetch(API_URL_CURRENT + "&q=" + city)
+      const result= await fetch(API_URL_CURRENT + "&q=" + city)
         .then(response => {
           return response.json();
         })
@@ -30,12 +31,14 @@ const WeatherApi = () => {
         .catch(error => {
           return [];
         });
-    }
+
+return result
+}
   
     //Get the 3 hours data (forecast). The API sends 40 items on this array
- const   get3HoursData=(city)=> {
+ const get3HoursData=async(city)=> {
       //console.log(API_URL_3HOURS + "&q=" + city);
-      return fetch(API_URL_3HOURS + "&q=" + city)
+    const result=  await fetch(API_URL_3HOURS + "&q=" + city)
         .then(response => {
           return response.json();
         })
@@ -52,6 +55,8 @@ const WeatherApi = () => {
         .catch(error => {
           return [];
         });
+
+        return result
     }
   
   
@@ -104,7 +109,13 @@ const WeatherApi = () => {
       return `http://openweathermap.org/img/wn/${icon}@2x.png`;
     }
 
-    return null
+    return {
+      getTodayData,
+      get3HoursData,
+      getWeeklyData,
+      formatDate,
+      getIconUrl
+    }
 
   
 }

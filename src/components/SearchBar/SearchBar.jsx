@@ -6,13 +6,15 @@ function SearchBar (props) {
   
     const [term, setTerm] = useState("")
 
- 
+ const {onSearch}=props
 
   const search=()=> {
-   props.onSearch(term)
+    console.log("searching")
+    onSearch(term)
   }
 
   const handleTermChange=(event)=> {
+    console.log("value=",term)
     setTerm(event.target.value);
   }
 
